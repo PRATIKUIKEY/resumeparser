@@ -1,0 +1,51 @@
+import nltk
+from nltk.tokenize import word_tokenize
+
+# Preprocessing and tokenization
+def preprocess_resume(resume_text):
+    # Tokenize the resume text into individual words
+    tokens = word_tokenize(resume_text)
+    
+    # Convert all words to lowercase
+    lowercase_tokens = [token.lower() for token in tokens]
+    
+    return lowercase_tokens
+
+# Matching candidate skills with job requirements
+def find_matching_candidates(job_requirements, candidates):
+    matching_candidates = []
+    
+    for candidate in candidates:
+        candidate_skills = set(candidate['skills'])
+        
+        if candidate_skills.issuperset(job_requirements):
+            matching_candidates.append(candidate)
+    
+    return matching_candidates
+
+# Example usage
+job_requirements = {'python', 'machine learning', 'data analysis'}
+candidates = [
+    {
+        'name': 'John Doe',
+        'skills': ['python', 'data analysis', 'deep learning']
+    },
+    {
+        'name': 'Jane Smith',
+        'skills': ['python', 'machine learning', 'data visualization']
+    },
+    {
+        'name': 'David Johnson',
+        'skills': ['data analysis', 'statistics', 'data mining']
+    }
+]
+
+# Preprocess the job requirements
+processed_job_requirements = preprocess_resume(' '.join(job_requirements))
+
+# Preprocess and match candidates
+matched_candidates = find_matching_candidates(processed_job_requirements, candidates)
+
+# Print the matched candidates
+for candidate in matched_candidates:
+    print(f"Matched candidate: {candidate['name']}")
